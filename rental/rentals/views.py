@@ -1,12 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Count, Sum, Avg
+from django.utils.timezone import now
 from .models import Car, Rental, Payment
+from datetime import timedelta
+
 
 def landing_page(request):
     return render(request, 'rentals/index.html')
 
+
 def index(request):
-    # Поиск и фильтры
     search_query = request.GET.get('q', '')
     brand = request.GET.get('brand')
     min_price = request.GET.get('min_price')
@@ -16,7 +19,6 @@ def index(request):
     max_mileage = request.GET.get('max_mileage')
     sort_by = request.GET.get('sort_by')
 
-    # Базовый queryset
     available_cars = Car.objects.filter(is_available=True)
 
     if search_query:
@@ -41,13 +43,8 @@ def index(request):
     elif sort_by == '-popularity':
         available_cars = available_cars.annotate(rental_count=Count('rental')).order_by('-rental_count')
 
-    # Популярные авто
     popular_cars = Car.objects.annotate(rental_count=Count('rental')).order_by('-rental_count')[:3]
-
-    # Последние аренды
     latest_rentals = Rental.objects.select_related('car', 'client').order_by('-start_date')[:5]
-
-    # Статистика платежей
     payments_stats = Payment.objects.aggregate(
         total_amount=Sum('amount'),
         count=Count('id'),
@@ -60,17 +57,18 @@ def index(request):
         'latest_rentals': latest_rentals,
         'payments_stats': payments_stats,
         'search_query': search_query,
-        'request': request,  # нужно для сохранения значений в шаблоне
+        'request': request,
     })
+
 
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     return render(request, 'rentals/car_detail.html', {'car': car})
 
+
 def cars_list(request):
     cars = Car.objects.all()
 
-    # Аналогичная фильтрация для отдельной страницы
     brand = request.GET.get('brand')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
@@ -101,6 +99,43 @@ def cars_list(request):
 
     return render(request, 'rentals/cars_list.html', {'cars': cars})
 
+
 def rentals_list(request):
     rentals = Rental.objects.all()
     return render(request, 'rentals/rentals_list.html', {'rentals': rentals})
+
+from django.shortcuts import redirect
+
+# Добавить или удалить из избранного
+def toggle_favorite(request, car_id):
+    favorites = request.session.get('favorites', [])
+
+    if car_id in favorites:
+        favorites.remove(car_id)
+    else:
+        favorites.append(car_id)
+
+    request.session['favorites'] = favorites
+    return redirect('rentals:car_detail', pk=car_id)
+
+# Страница со списком избранных авто
+def favorite_cars(request):
+    favorite_ids = request.session.get('favorites', [])
+    cars = Car.objects.filter(id__in=favorite_ids)
+    return render(request, 'rentals/favorites.html', {'cars': cars})
+
+
+# --- Сложная бизнес-логика ---
+def is_car_available(car, start_date, end_date):
+    overlapping = Rental.objects.filter(
+        car=car,
+        end_date__gte=start_date,
+        start_date__lte=end_date
+    )
+    return not overlapping.exists()
+
+
+def calculate_rental_cost(car, start_date, end_date, extra_services_cost=0):
+    duration_days = (end_date - start_date).days + 1
+    base_cost = car.rental_cost_per_day * duration_days
+    return base_cost + extra_services_cost

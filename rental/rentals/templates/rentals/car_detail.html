@@ -26,6 +26,14 @@
         <p><strong>Цена за день:</strong> <span class="price">{{ car.rental_cost_per_day }} ₽</span></p>
         <p><strong>Доступность:</strong> {% if car.is_available %}<span class="available">Доступен</span>{% else %}<span class="unavailable">Недоступен</span>{% endif %}</p>
         <a href="{% url 'rentals:cars_list' %}" class="btn">← Назад ко всем</a>
+        <a href="{% url 'rentals:toggle_favorite' car.id %}" class="favorite-btn">
+        {% if car.id|stringformat:"s" in request.session.favorites|default:"[]" %}
+          ❤️ Удалить из избранного
+        {% else %}
+          🤍 В избранное
+        {% endif %}
+        </a>
+
       </div>
     </div>
   </section>
