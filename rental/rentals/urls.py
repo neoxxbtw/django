@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
-
-app_name = 'rentals'  # ← обязательно!
+from django.views.generic import RedirectView
+app_name = 'rentals'
 
 urlpatterns = [
     path('', views.index, name='index'),

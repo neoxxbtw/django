@@ -1,9 +1,33 @@
-<h1>{{ car.brand }} {{ car.model }}</h1>
-<p>Год выпуска: {{ car.year }}</p>
-<p>Стоимость аренды в день: {{ car.rental_cost_per_day }} ₽</p>
-<h2>Информация об авто</h2>
-<p>Марка: {{ car.brand }}</p>
-<p>Модель: {{ car.model }}</p>
-<p>Год выпуска: {{ car.year }}</p>
-<p>Цена за день: {{ car.rental_cost_per_day }} ₽</p>
-<p>Доступно: {{ car.is_available|yesno:"Да,Нет" }}</p>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ car.brand }} {{ car.model }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <section class="car-detail-page">
+    <div class="car-detail-container">
+      <div class="car-image-box">
+        {% if car.image %}
+          <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+        {% else %}
+          <div class="placeholder">Нет изображения</div>
+        {% endif %}
+      </div>
+      <div class="car-info-box">
+        <h1>{{ car.brand }} {{ car.model }}</h1>
+        <p><strong>Год выпуска:</strong> {{ car.year }}</p>
+        <p><strong>Гос. номер:</strong> {{ car.license_plate }}</p>
+        <p><strong>Цвет:</strong> {{ car.color|default:"Не указан" }}</p>
+        <p><strong>Пробег:</strong> {{ car.mileage|default:"—" }} км</p>
+        <p><strong>Цена за день:</strong> <span class="price">{{ car.rental_cost_per_day }} ₽</span></p>
+        <p><strong>Доступность:</strong> {% if car.is_available %}<span class="available">Доступен</span>{% else %}<span class="unavailable">Недоступен</span>{% endif %}</p>
+        <a href="{% url 'rentals:index' %}" class="btn">← Назад ко всем</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
