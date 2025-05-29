@@ -7,6 +7,13 @@
     <title>Список автомобилей</title>
 </head>
 <body>
+
+    <!-- Навигационное меню -->
+    <nav style="margin-bottom: 20px;">
+        <a href="{% url 'rentals:index' %}" class="btn">Главная</a>
+        <a href="{% url 'rentals:car_add' %}" class="btn">Добавить авто</a>
+    </nav>
+
     <section>
         <h1>Список автомобилей</h1>
 
@@ -22,7 +29,14 @@
                         <div class="car-info">
                             <h3>{{ car.brand }} {{ car.model }}</h3>
                             <p><strong>Гос. номер:</strong> {{ car.license_plate }}</p>
+
+                            <!-- Кнопки действий -->
                             <a class="btn" href="{% url 'rentals:car_detail' car.id %}">Подробнее →</a>
+                            <a class="btn" href="{% url 'rentals:car_edit' car.id %}" style="background: #0066cc;">✏️ Редактировать</a>
+                            <form method="post" action="{% url 'rentals:car_delete' car.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn" style="background: #cc0000;">🗑 Удалить</button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}
@@ -30,8 +44,7 @@
         {% else %}
             <p>Автомобили не найдены.</p>
         {% endif %}
-
-        <a href="{% url 'rentals:index' %}" class="btn" style="margin-top: 30px; display: inline-block;">← На главную</a>
     </section>
+
 </body>
 </html>
