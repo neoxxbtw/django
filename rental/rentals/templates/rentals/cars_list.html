@@ -2,28 +2,36 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-	{% load static %}
-    <link rel="stylesheet" href="css/style.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Список автомобилей</title>
 </head>
 <body>
-    <h1>Все автомобили</h1>
-    <ul>
-        {% for car in cars %}
-            <li>{{ car.brand }} {{ car.model }} ({{ car.license_plate }})</li>
-        {% empty %}
-            <li>Автомобили не найдены.</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'rentals:index' %}">На главную</a>
-    <h2>Список автомобилей</h2>
-<ul>
-  {% for car in cars %}
-    <li>
-      <a href="{% url 'rentals:car_detail' car.id %}">{{ car.brand }} {{ car.model }}</a>
-    </li>
-  {% endfor %}
-</ul>
+    <section>
+        <h1>Список автомобилей</h1>
 
+        {% if cars %}
+            <div class="car-grid">
+                {% for car in cars %}
+                    <div class="car-card">
+                        {% if car.image %}
+                            <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+                        {% else %}
+                            <div class="placeholder">Нет изображения</div>
+                        {% endif %}
+                        <div class="car-info">
+                            <h3>{{ car.brand }} {{ car.model }}</h3>
+                            <p><strong>Гос. номер:</strong> {{ car.license_plate }}</p>
+                            <a class="btn" href="{% url 'rentals:car_detail' car.id %}">Подробнее →</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Автомобили не найдены.</p>
+        {% endif %}
+
+        <a href="{% url 'rentals:index' %}" class="btn" style="margin-top: 30px; display: inline-block;">← На главную</a>
+    </section>
 </body>
 </html>
