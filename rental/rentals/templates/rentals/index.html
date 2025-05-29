@@ -36,22 +36,27 @@
   <h2>Фильтрация автомобилей</h2>
   <form method="get" action=".">
     <div class="filter-bar">
-      <input type="text" name="brand" placeholder="Марка" value="{{ request.GET.brand }}">
-      <input type="number" name="min_price" placeholder="Цена от" value="{{ request.GET.min_price }}">
-      <input type="number" name="max_price" placeholder="Цена до" value="{{ request.GET.max_price }}">
-      <input type="number" name="min_year" placeholder="Год от" value="{{ request.GET.min_year }}">
-      <input type="number" name="max_year" placeholder="Год до" value="{{ request.GET.max_year }}">
-      <input type="number" name="max_mileage" placeholder="Макс. пробег" value="{{ request.GET.max_mileage }}">
-      <select name="sort_by">
-        <option value="">Сортировка</option>
-        <option value="price" {% if request.GET.sort_by == 'price' %}selected{% endif %}>По цене (↑)</option>
-        <option value="-price" {% if request.GET.sort_by == '-price' %}selected{% endif %}>По цене (↓)</option>
-        <option value="-popularity" {% if request.GET.sort_by == '-popularity' %}selected{% endif %}>По популярности</option>
-      </select>
-      <button type="submit">Применить</button>
+  <input type="text" name="brand" placeholder="Марка" value="{{ request.GET.brand }}">
+  <input type="number" name="min_price" placeholder="Цена от" value="{{ request.GET.min_price }}">
+  <input type="number" name="max_price" placeholder="Цена до" value="{{ request.GET.max_price }}">
+  <input type="number" name="min_year" placeholder="Год от" value="{{ request.GET.min_year }}">
+  <input type="number" name="max_year" placeholder="Год до" value="{{ request.GET.max_year }}">
+  <input type="number" name="max_mileage" placeholder="Макс. пробег" value="{{ request.GET.max_mileage }}">
+  <select name="sort_by">
+    <option value="">Сортировка</option>
+    <option value="price" {% if request.GET.sort_by == 'price' %}selected{% endif %}>По цене (↑)</option>
+    <option value="-price" {% if request.GET.sort_by == '-price' %}selected{% endif %}>По цене (↓)</option>
+    <option value="-popularity" {% if request.GET.sort_by == '-popularity' %}selected{% endif %}>По популярности</option>
+  </select>
+  <div class="button-group">
+      <button type="submit" class="btn apply-btn">Применить</button>
+      <a href="." class="btn reset-btn">Сбросить</a>
     </div>
+</div>
+
   </form>
 </section>
+
 
   <section>
     <h2>Доступные автомобили</h2>

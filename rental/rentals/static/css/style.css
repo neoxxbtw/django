@@ -123,37 +123,59 @@ form select {
 form button {
   margin-left: 10px;
 }
+/* === Фильтрация и кнопки === */
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-items: flex-end;
   margin-top: 15px;
 }
 
-.filter-bar input,
-.filter-bar select,
-.filter-bar button {
-  padding: 8px;
+/* Универсальные кнопки */
+.btn {
+  padding: 10px 20px;
+  min-width: 130px;
+  height: 40px;
   border-radius: 6px;
-  border: 1px solid #555;
-  background-color: #1c1c1c;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+/* Применить */
+.apply-btn {
+  background-color: #ff8c00;
   color: #fff;
 }
 
-.filter-bar input,
-.filter-bar select {
-  width: 160px;
+.apply-btn:hover {
+  background-color: #e67300;
 }
 
-.filter-bar button {
-  background: #ff8c00;
-  border: none;
-  cursor: pointer;
+/* Сбросить */
+.reset-btn {
+  background-color: #6c757d;
+  color: #fff;
 }
 
-.filter-bar button:hover {
-  background: #e67300;
+.reset-btn:hover {
+  background-color: #5a6268;
 }
+
+/* Контейнер для группировки кнопок */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
 
 /* === Список === */
 ol, ul {
@@ -293,22 +315,4 @@ li {
 .car-info-box .btn:hover,
 .car-info-box a.btn:hover {
   background: #e67300;
-}
-
-/* === Адаптивность === */
-@media (max-width: 768px) {
-  .car-detail-container {
-    flex-direction: column;
-  }
-
-  .car-image-box,
-  .car-info-box {
-    max-width: 100%;
-  }
-
-  form input[type="text"],
-  form input[type="number"],
-  form select {
-    width: 100%;
-  }
 }
