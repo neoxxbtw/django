@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Список автомобилей</title>
+    <title>Избранные автомобили</title>
 </head>
 <body>
     <section>
-        <h1>Список автомобилей</h1>
+        <h1>Избранные автомобили</h1>
 
         {% if cars %}
             <div class="car-grid">
                 {% for car in cars %}
-                    <div class="car-card">
+                    <div class="car-card {% if car.id|stringformat:'s' in request.session.favorites %}favorite{% endif %}">
                         {% if car.image %}
                             <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
                         {% else %}

@@ -177,6 +177,7 @@ form button {
 }
 
 
+
 /* === Список === */
 ol, ul {
   margin-top: 15px;
@@ -261,20 +262,21 @@ li {
   color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  gap: 16px;
+  position: relative;
 }
 
 .car-info-box h1 {
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 28px;
   color: #ffa500;
+  margin: 0;
 }
 
 .car-info-box p {
   font-size: 16px;
-  margin-bottom: 12px;
-  line-height: 1.6;
+  line-height: 1.5;
   color: #ccc;
+  margin: 0;
 }
 
 .car-info-box p strong {
@@ -299,7 +301,6 @@ li {
 
 .car-info-box .btn,
 .car-info-box a.btn {
-  margin-top: 25px;
   background: #ff8c00;
   padding: 12px 24px;
   color: #fff;
@@ -307,12 +308,92 @@ li {
   font-weight: bold;
   text-align: center;
   transition: 0.3s;
-  display: inline-block;
-  width: fit-content;
   text-decoration: none;
+  margin-top: auto; /* Pushes button to bottom if space allows */
 }
 
 .car-info-box .btn:hover,
 .car-info-box a.btn:hover {
   background: #e67300;
+}
+
+/* === Favorite button inside .car-info-box === */
+.car-info-box .favorite-btn {
+  margin-top: 10px;
+  align-self: flex-start;
+  font-size: 18px;
+  padding: 8px 16px;
+}
+
+@media (max-width: 768px) {
+  .car-detail-container {
+    flex-direction: column;
+  }
+
+  .car-image-box,
+  .car-info-box {
+    max-width: 100%;
+  }
+
+  .car-info-box {
+    margin-top: 20px;
+  }
+}
+
+/* === Кнопка "Избранное" в карточке === */
+.favorite-btn {
+  font-size: 20px;
+  padding: 10px 18px;
+  border: none;
+  background: none;
+  color: #ff8c00;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid #ff8c00;
+}
+
+.favorite-btn:hover {
+  background-color: rgba(255, 140, 0, 0.1);
+}
+
+.favorite-btn.hearted {
+  color: #ff2e63;
+  border-color: #ff2e63;
+}
+
+.favorite-btn i {
+  font-style: normal;
+  font-size: 24px;
+}
+
+/* === Ссылка в верхнем меню === */
+.favorite-menu-link {
+  display: inline-block;
+  color: #ff8c00;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.3s;
+  margin-left: 20px;
+}
+
+.favorite-menu-link:hover {
+  color: #ff4500;
+}
+
+.favorite-count {
+  color: #fff;
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+/* === Подсветка избранной карточки === */
+.car-card.favorite {
+  border: 2px solid #ff2e63;
+  box-shadow: 0 6px 24px rgba(255, 46, 99, 0.4);
 }

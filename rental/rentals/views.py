@@ -102,27 +102,24 @@ def cars_list(request):
 
 def rentals_list(request):
     rentals = Rental.objects.all()
-    return render(request, 'rentals/rentals_list.html', {'rentals': rentals})
-
-from django.shortcuts import redirect
-
-# Добавить или удалить из избранного
-def toggle_favorite(request, car_id):
-    favorites = request.session.get('favorites', [])
-
-    if car_id in favorites:
-        favorites.remove(car_id)
-    else:
-        favorites.append(car_id)
-
-    request.session['favorites'] = favorites
-    return redirect('rentals:car_detail', pk=car_id)
 
 # Страница со списком избранных авто
 def favorite_cars(request):
     favorite_ids = request.session.get('favorites', [])
     cars = Car.objects.filter(id__in=favorite_ids)
     return render(request, 'rentals/favorites.html', {'cars': cars})
+
+def toggle_favorite(request, car_id):
+    favorites = request.session.get('favorites', [])
+    car_id_str = str(car_id)
+
+    if car_id_str in favorites:
+        favorites.remove(car_id_str)
+    else:
+        favorites.append(car_id_str)
+
+    request.session['favorites'] = favorites
+    return redirect(request.META.get('HTTP_REFERER', 'rentals:index'))
 
 
 # --- Сложная бизнес-логика ---

@@ -9,6 +9,7 @@ urlpatterns = [
     path('rentals/', include('rentals.urls', namespace='rentals')),
     path('all/', views.rentals_list, name='rentals_list'),
     path('', views.landing_page, name='landing_page'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

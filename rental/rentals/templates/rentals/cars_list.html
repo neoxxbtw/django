@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Список автомобилей</title>
 </head>
+
+<nav class="menu">
+    <a href="{% url 'rentals:index' %}">🏠 Главная</a>
+    <a href="{% url 'rentals:cars_list' %}">🚗 Все авто</a>
+    <a href="{% url 'rentals:favorite_cars' %}">❤️ Избранное</a>
+</nav>
+
 <body>
     <section>
         <h1>Список автомобилей</h1>
