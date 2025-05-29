@@ -25,7 +25,7 @@
         <p><strong>Пробег:</strong> {{ car.mileage|default:"—" }} км</p>
         <p><strong>Цена за день:</strong> <span class="price">{{ car.rental_cost_per_day }} ₽</span></p>
         <p><strong>Доступность:</strong> {% if car.is_available %}<span class="available">Доступен</span>{% else %}<span class="unavailable">Недоступен</span>{% endif %}</p>
-        <a href="{% url 'rentals:index' %}" class="btn">← Назад ко всем</a>
+        <a href="{% url 'rentals:cars_list' %}" class="btn">← Назад ко всем</a>
       </div>
     </div>
   </section>

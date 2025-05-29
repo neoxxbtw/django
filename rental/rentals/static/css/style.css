@@ -1,4 +1,4 @@
-/* Reset */
+/* === Reset === */
 * {
   margin: 0;
   padding: 0;
@@ -13,13 +13,13 @@ body {
   padding: 20px;
 }
 
-/* Заголовки */
+/* === Заголовки === */
 h1, h2, h3 {
   color: #ffa500;
   margin-bottom: 15px;
 }
 
-/* Глобальные стили */
+/* === Глобальные стили === */
 a {
   color: inherit;
   text-decoration: none;
@@ -34,7 +34,7 @@ section {
   margin-bottom: 60px;
 }
 
-/* Популярные авто */
+/* === Популярные авто / карточки авто === */
 .car-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -87,7 +87,7 @@ section {
   color: #bbb;
 }
 
-/* Кнопка */
+/* === Кнопка === */
 .view-all-btn,
 button {
   display: inline-block;
@@ -107,21 +107,55 @@ button:hover {
   background: #e67300;
 }
 
-/* Поиск */
-form input[type="text"] {
+/* === Поиск и форма фильтра === */
+form input[type="text"],
+form input[type="number"],
+form select {
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #555;
   background-color: #1c1c1c;
   color: #fff;
+  margin-bottom: 10px;
   width: 250px;
 }
 
 form button {
   margin-left: 10px;
 }
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
 
-/* Список */
+.filter-bar input,
+.filter-bar select,
+.filter-bar button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #1c1c1c;
+  color: #fff;
+}
+
+.filter-bar input,
+.filter-bar select {
+  width: 160px;
+}
+
+.filter-bar button {
+  background: #ff8c00;
+  border: none;
+  cursor: pointer;
+}
+
+.filter-bar button:hover {
+  background: #e67300;
+}
+
+/* === Список === */
 ol, ul {
   margin-top: 15px;
   padding-left: 20px;
@@ -133,7 +167,7 @@ li {
   padding-left: 10px;
 }
 
-/* Overlay стиль */
+/* === Overlay стиль === */
 .overlay {
   position: absolute;
   bottom: 0;
@@ -143,7 +177,20 @@ li {
   color: #fff;
   font-size: 14px;
 }
-/* ===== Детальная страница авто ===== */
+
+/* === Дополнительные услуги === */
+.extra-services .checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.extra-services input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+/* === Детальная страница авто === */
 .car-detail-page {
   max-width: 1200px;
   margin: 0 auto;
@@ -154,33 +201,29 @@ li {
   display: flex;
   flex-wrap: nowrap;
   gap: 40px;
-  align-items: flex-start; /* не растягивает по высоте */
+  align-items: flex-start;
   justify-content: space-between;
 }
-
-
 
 .car-image-box,
 .car-info-box {
   flex: 1 1 50%;
-  min-width: 0; /* важно, чтобы не ломалось */
+  min-width: 0;
 }
+
 .car-image-box {
   flex: 1 1 65%;
   max-width: 65%;
 }
 
-
 .car-image-box img {
   width: 100%;
-  height: auto; /* убираем фиксированную высоту */
+  height: auto;
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(255, 165, 0, 0.2);
   transition: 0.3s ease-in-out;
 }
-
-
 
 .car-image-box img:hover {
   transform: scale(1.05);
@@ -198,7 +241,6 @@ li {
   flex-direction: column;
   justify-content: flex-start;
 }
-
 
 .car-info-box h1 {
   font-size: 32px;
@@ -251,4 +293,22 @@ li {
 .car-info-box .btn:hover,
 .car-info-box a.btn:hover {
   background: #e67300;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+  .car-detail-container {
+    flex-direction: column;
+  }
+
+  .car-image-box,
+  .car-info-box {
+    max-width: 100%;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form select {
+    width: 100%;
+  }
 }

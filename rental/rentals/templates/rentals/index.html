@@ -1,91 +1,122 @@
-<!doctype html>
-<html lang="en">
+{% load static %}
+<!Doctype html>
+<html lang="ru">
 <head>
-	<meta charset="UTF-8">
-	<title>Главная страница автопроката</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	{% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta charset="UTF-8">
+  <title>Главная страница автопроката</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<section class="car-list">
-  <h2>Популярные авто</h2>
-  <div class="car-grid">
-    {% for car in popular_cars %}
-    <div class="car-card">
-      <a href="{% url 'rentals:car_detail' car.id %}">
-        {% if car.image %}
-          <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
-        {% else %}
-          <div class="placeholder">Нет фото</div>
-        {% endif %}
-        <div class="car-info">
-          <h3>{{ car.brand }} {{ car.model }}</h3>
-          <p>{{ car.year }} г.</p>
-          <p>{{ car.rental_count }} аренды</p>
-        </div>
-      </a>
-    </div>
-    {% endfor %}
-  </div>
-  <a href="{% url 'rentals:cars_list' %}" class="view-all-btn">Смотреть все</a>
-</section>
+<body>
 
-<section>
-  <h2>Доступные автомобили</h2>
-  <form method="get" action=".">
-  <input type="text" name="q" placeholder="Поиск по марке" value="{{ search_query }}">
-  <button type="submit">Найти</button>
-  </form>
-  <ol>
-    {% for car in available_cars %}
-      <li>
-        {{ car.brand }}
-        {{ car.model }}
-        — {{ car.rental_cost_per_day }} ₽/день
-      </li>
-    {% endfor %}
-  </ol>
-   <a href="{% url 'rentals:cars_list' %}">Все автомобили</a>
-</section>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for car in cars %}
-    <div class="col">
-        <div class="game-thumb position-relative rounded">
+  <!-- Популярные авто -->
+  <section class="car-list">
+    <h2>Популярные авто</h2>
+    <div class="car-grid">
+      {% for car in popular_cars %}
+        <div class="car-card">
+          <a href="{% url 'rentals:car_detail' car.id %}">
             {% if car.image %}
-                <img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" class="img-fluid rounded" />
+              <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+            {% else %}
+              <div class="placeholder">Нет фото</div>
             {% endif %}
-            <div class="overlay">
-                <h5 class="mb-1">{{ car.make }} {{ car.model }}</h5>
-                <p>Год: {{ car.year }}</p>
+            <div class="car-info">
+              <h3>{{ car.brand }} {{ car.model }}</h3>
+              <p>{{ car.year }} г.</p>
+              <p>{{ car.rental_count }} аренды</p>
             </div>
-            <a href="{% url 'car_detail' car.id %}" class="stretched-link"></a>
+          </a>
         </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-</div>
-
-
+    <a href="{% url 'rentals:cars_list' %}" class="view-all-btn">Смотреть все</a>
+  </section>
 <section>
-  <h2>Последние аренды</h2>
-  <ol>
-    {% for rental in latest_rentals %}
-      <li>
-        Клиент: {{ rental.client.full_name }}<br>
-        Авто: {{ rental.car.brand }} {{ rental.car.model }}<br>
-        Период: {{ rental.start_date }} — {{ rental.end_date }}<br>
-        Статус: {{ rental.status }}<br>
-        Итоговая стоимость: {{ rental.total_cost }} ₽
-      </li>
-    {% endfor %}
-  </ol>
-  <a href="{% url 'rentals:rentals_list' %}">Все аренды</a>
+  <h2>Фильтрация автомобилей</h2>
+  <form method="get" action=".">
+    <div class="filter-bar">
+      <input type="text" name="brand" placeholder="Марка" value="{{ request.GET.brand }}">
+      <input type="number" name="min_price" placeholder="Цена от" value="{{ request.GET.min_price }}">
+      <input type="number" name="max_price" placeholder="Цена до" value="{{ request.GET.max_price }}">
+      <input type="number" name="min_year" placeholder="Год от" value="{{ request.GET.min_year }}">
+      <input type="number" name="max_year" placeholder="Год до" value="{{ request.GET.max_year }}">
+      <input type="number" name="max_mileage" placeholder="Макс. пробег" value="{{ request.GET.max_mileage }}">
+      <select name="sort_by">
+        <option value="">Сортировка</option>
+        <option value="price" {% if request.GET.sort_by == 'price' %}selected{% endif %}>По цене (↑)</option>
+        <option value="-price" {% if request.GET.sort_by == '-price' %}selected{% endif %}>По цене (↓)</option>
+        <option value="-popularity" {% if request.GET.sort_by == '-popularity' %}selected{% endif %}>По популярности</option>
+      </select>
+      <button type="submit">Применить</button>
+    </div>
+  </form>
 </section>
 
-<section>
-  <h2>Статистика по платежам за последний месяц</h2>
-  <p>Общая сумма платежей: {{ payments_stats.total_amount|default:"0" }} ₽</p>
-  <p>Количество платежей: {{ payments_stats.count }}</p>
-  <p>Средняя сумма платежа: {{ payments_stats.avg_amount|default:"0" }} ₽</p>
-</section>
+  <section>
+    <h2>Доступные автомобили</h2>
+    {% if available_cars %}
+      <div class="car-grid">
+        {% for car in available_cars %}
+          <div class="car-card">
+            <a href="{% url 'rentals:car_detail' car.id %}">
+              {% if car.image %}
+                <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+              {% else %}
+                <div class="placeholder">Нет фото</div>
+              {% endif %}
+              <div class="car-info">
+                <h3>{{ car.brand }} {{ car.model }}</h3>
+                <p>{{ car.rental_cost_per_day }} ₽/день</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Автомобили не найдены.</p>
+    {% endif %}
+    <a href="{% url 'rentals:cars_list' %}" class="view-all-btn">Все автомобили</a>
+  </section>
 
+  <!-- Дополнительные услуги -->
+  <section class="extra-services">
+    <h2>Выберите дополнительные услуги</h2>
+      {% csrf_token %}
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="extras" value="Навигатор"> Навигатор</label>
+        <label><input type="checkbox" name="extras" value="Подушка"> Подушка</label>
+        <label><input type="checkbox" name="extras" value="Детское кресло"> Детское кресло</label>
+        <label><input type="checkbox" name="extras" value="Доп. страховка"> Доп. страховка</label>
+        <label><input type="checkbox" name="extras" value="Мобильный телефон"> Мобильный телефон</label>
+      </div>
+      <button type="submit" class="btn">Подтвердить выбор</button>
+    </form>
+  </section>
+
+  <!-- Последние аренды -->
+  <section>
+    <h2>Последние аренды</h2>
+    <ol>
+      {% for rental in latest_rentals %}
+        <li>
+          Клиент: {{ rental.client.full_name }}<br>
+          Авто: {{ rental.car.brand }} {{ rental.car.model }}<br>
+          Период: {{ rental.start_date }} — {{ rental.end_date }}<br>
+          Итоговая стоимость: {{ rental.total_cost }} ₽
+        </li>
+      {% endfor %}
+    </ol>
+    <a href="{% url 'rentals:rentals_list' %}" class="view-all-btn">Все аренды</a>
+  </section>
+
+  <!-- Статистика по платежам -->
+  <section>
+    <h2>Статистика по платежам за последний месяц</h2>
+    <p>Общая сумма: {{ payments_stats.total_amount|default:"0" }} ₽</p>
+    <p>Количество: {{ payments_stats.count }}</p>
+    <p>Средняя сумма: {{ payments_stats.avg_amount|default:"0" }} ₽</p>
+  </section>
+
+</body>
+</html>
