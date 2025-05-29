@@ -1,0 +1,145 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0d0d0d;
+  color: #f2f2f2;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Заголовки */
+h1, h2, h3 {
+  color: #ffa500;
+  margin-bottom: 15px;
+}
+
+/* Глобальные стили */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: #ff4500;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+/* Популярные авто */
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.car-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.4s ease-in-out;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+}
+
+.car-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(255, 140, 0, 0.4);
+}
+
+.car-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.placeholder {
+  height: 180px;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 18px;
+}
+
+.car-info {
+  padding: 15px;
+  border-top: 1px solid #333;
+}
+
+.car-info h3 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.car-info p {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Кнопка */
+.view-all-btn,
+button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ff8c00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-all-btn:hover,
+button:hover {
+  background: #e67300;
+}
+
+/* Поиск */
+form input[type="text"] {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #1c1c1c;
+  color: #fff;
+  width: 250px;
+}
+
+form button {
+  margin-left: 10px;
+}
+
+/* Список */
+ol, ul {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 10px;
+  border-left: 4px solid #ffa500;
+  padding-left: 10px;
+}
+
+/* Overlay стиль */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Главная страница автопроката</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<section class="car-list">
+  <h2>Популярные авто</h2>
+  <div class="car-grid">
+    {% for car in popular_cars %}
+    <div class="car-card">
+      <a href="{% url 'rentals:car_detail' car.id %}">
+        {% if car.image %}
+          <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
+        {% else %}
+          <div class="placeholder">Нет фото</div>
+        {% endif %}
+        <div class="car-info">
+          <h3>{{ car.brand }} {{ car.model }}</h3>
+          <p>{{ car.year }} г.</p>
+          <p>{{ car.rental_count }} аренды</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="{% url 'rentals:cars_list' %}" class="view-all-btn">Смотреть все</a>
+</section>
+
+<section>
+  <h2>Доступные автомобили</h2>
+  <form method="get" action=".">
+  <input type="text" name="q" placeholder="Поиск по марке" value="{{ search_query }}">
+  <button type="submit">Найти</button>
+  </form>
+  <ol>
+    {% for car in available_cars %}
+      <li>
+        {{ car.brand }}
+        {{ car.model }}
+        — {{ car.rental_cost_per_day }} ₽/день
+      </li>
+    {% endfor %}
+  </ol>
+   <a href="{% url 'rentals:cars_list' %}">Все автомобили</a>
+</section>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for car in cars %}
+    <div class="col">
+        <div class="game-thumb position-relative rounded">
+            {% if car.image %}
+                <img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" class="img-fluid rounded" />
+            {% endif %}
+            <div class="overlay">
+                <h5 class="mb-1">{{ car.make }} {{ car.model }}</h5>
+                <p>Год: {{ car.year }}</p>
+            </div>
+            <a href="{% url 'car_detail' car.id %}" class="stretched-link"></a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Машины не найдены.</p>
+    {% endfor %}
+</div>
+
+
+<section>
+  <h2>Последние аренды</h2>
+  <ol>
+    {% for rental in latest_rentals %}
+      <li>
+        Клиент: {{ rental.client.full_name }}<br>
+        Авто: {{ rental.car.brand }} {{ rental.car.model }}<br>
+        Период: {{ rental.start_date }} — {{ rental.end_date }}<br>
+        Статус: {{ rental.status }}<br>
+        Итоговая стоимость: {{ rental.total_cost }} ₽
+      </li>
+    {% endfor %}
+  </ol>
+  <a href="{% url 'rentals:rentals_list' %}">Все аренды</a>
+</section>
+
+<section>
+  <h2>Статистика по платежам за последний месяц</h2>
+  <p>Общая сумма платежей: {{ payments_stats.total_amount|default:"0" }} ₽</p>
+  <p>Количество платежей: {{ payments_stats.count }}</p>
+  <p>Средняя сумма платежа: {{ payments_stats.avg_amount|default:"0" }} ₽</p>
+</section>
+
