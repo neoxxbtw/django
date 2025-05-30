@@ -154,14 +154,17 @@ button:hover {
 form input[type="text"],
 form input[type="number"],
 form select {
-  padding: 8px;
+  padding: 10px 12px;
   border-radius: 6px;
   border: 1px solid #555;
   background-color: #1c1c1c;
   color: #fff;
-  margin-bottom: 10px;
   width: 250px;
+  height: 40px;
+  line-height: 1;
+  box-sizing: border-box;
 }
+
 
 form button {
   margin-left: 10px;
@@ -174,6 +177,7 @@ form button {
   align-items: flex-end;
   margin-top: 15px;
 }
+
 
 /* Универсальные кнопки */
 .btn {
@@ -193,24 +197,40 @@ form button {
   text-decoration: none;
 }
 
-/* Применить */
-.apply-btn {
-  background-color: #ff8c00;
-  color: #fff;
+.apply-btn{
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.apply-btn:hover {
-  background-color: #e67300;
-}
-
-/* Сбросить */
 .reset-btn {
   background-color: #6c757d;
   color: #fff;
+  border: none;
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
 }
 
 .reset-btn:hover {
   background-color: #5a6268;
+  opacity: 1;
+}
+.reset-container {
+  margin-top: 10px;
 }
 
 /* Контейнер для группировки кнопок */

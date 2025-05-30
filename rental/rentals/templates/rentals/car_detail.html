@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
+<nav class="menu">
+  <a class="nav-button left" href="{% url 'rentals:index' %}">Главная</a>
+</nav>
 <body>
   <section class="car-detail-page">
     <div class="car-detail-container">
@@ -25,7 +29,7 @@
         <p><strong>Пробег:</strong> {{ car.mileage|default:"—" }} км</p>
         <p><strong>Цена за день:</strong> <span class="price">{{ car.rental_cost_per_day }} ₽</span></p>
         <p><strong>Доступность:</strong> {% if car.is_available %}<span class="available">Доступен</span>{% else %}<span class="unavailable">Недоступен</span>{% endif %}</p>
-        <a href="{% url 'rentals:cars_list' %}" class="btn">← Назад ко всем</a>
+        <a href="{% url 'rentals:cars_list' %}" class="btn">Арендовать</a>
         <a href="{% url 'rentals:toggle_favorite' car.id %}"
            class="favorite-btn {% if car.id|stringformat:'s' in request.session.favorites %}hearted{% endif %}">
            <i>{% if car.id|stringformat:'s' in request.session.favorites %}❤️{% else %}🤍{% endif %}</i>
