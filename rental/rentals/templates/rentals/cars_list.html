@@ -6,21 +6,20 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Список автомобилей</title>
 </head>
-
+<body>
 <nav class="menu">
-    <a href="{% url 'rentals:index' %}">🏠 Главная</a>
-    <a href="{% url 'rentals:cars_list' %}">🚗 Все авто</a>
-    <a href="{% url 'rentals:favorite_cars' %}">❤️ Избранное</a>
+  <a class="nav-button left" href="{% url 'rentals:index' %}">Главная</a>
+  <a class="nav-button right" href="{% url 'rentals:favorite_cars' %}">Избранное</a>
 </nav>
 
-<body>
-    <section>
-        <h1>Список автомобилей</h1>
+<section>
+    <h1>Список автомобилей</h1>
 
-        {% if cars %}
-            <div class="car-grid">
-                {% for car in cars %}
-                    <div class="car-card">
+    {% if cars %}
+        <div class="car-grid">
+            {% for car in cars %}
+                <div class="car-card">
+                    <a href="{% url 'rentals:car_detail' car.id %}">
                         {% if car.image %}
                             <img src="{{ car.image.url }}" alt="{{ car.brand }} {{ car.model }}">
                         {% else %}
@@ -28,17 +27,17 @@
                         {% endif %}
                         <div class="car-info">
                             <h3>{{ car.brand }} {{ car.model }}</h3>
-                            <p><strong>Гос. номер:</strong> {{ car.license_plate }}</p>
-                            <a class="btn" href="{% url 'rentals:car_detail' car.id %}">Подробнее →</a>
+                            <p>{{ car.year }} г.</p>
+                            <p><strong>{{ car.rental_cost_per_day }} ₽/день</strong></p>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>Автомобили не найдены.</p>
-        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Автомобили не найдены.</p>
+    {% endif %}
 
-        <a href="{% url 'rentals:index' %}" class="btn" style="margin-top: 30px; display: inline-block;">← На главную</a>
-    </section>
+</section>
 </body>
 </html>

@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Избранные автомобили</title>
 </head>
+
+<nav class="menu">
+  <a class="nav-button left" href="{% url 'rentals:index' %}">Главная</a>
+  <a class="nav-button right" href="{% url 'rentals:favorite_cars' %}">Избранное</a>
+</nav>
+
 <body>
     <section>
         <h1>Избранные автомобили</h1>
@@ -31,7 +37,6 @@
             <p>Автомобили не найдены.</p>
         {% endif %}
 
-        <a href="{% url 'rentals:index' %}" class="btn" style="margin-top: 30px; display: inline-block;">← На главную</a>
     </section>
 </body>
 </html>
