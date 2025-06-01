@@ -136,3 +136,35 @@ def calculate_rental_cost(car, start_date, end_date, extra_services_cost=0):
     duration_days = (end_date - start_date).days + 1
     base_cost = car.rental_cost_per_day * duration_days
     return base_cost + extra_services_cost
+
+from .forms import CarForm
+
+def car_add(request):
+    if request.method == 'POST':
+        form = CarForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('rentals:cars_list')
+    else:
+        form = CarForm()
+    return render(request, 'rentals/car_form.html', {'form': form, 'title': 'Добавить автомобиль'})
+
+
+def car_edit(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    if request.method == 'POST':
+        form = CarForm(request.POST, request.FILES, instance=car)
+        if form.is_valid():
+            form.save()
+            return redirect('rentals:car_detail', pk=pk)
+    else:
+        form = CarForm(instance=car)
+    return render(request, 'rentals/car_form.html', {'form': form, 'title': 'Редактировать автомобиль'})
+
+
+def car_delete(request, pk):
+    car = get_object_or_404(Car, pk=pk)
+    if request.method == 'POST':
+        car.delete()
+        return redirect('rentals:cars_list')
+    return render(request, 'rentals/car_confirm_delete.html', {'car': car})
