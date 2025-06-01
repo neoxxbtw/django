@@ -167,4 +167,4 @@ def car_delete(request, pk):
     if request.method == 'POST':
         car.delete()
         return redirect('rentals:cars_list')
-    return render(request, 'rentals/car_confirm_delete.html', {'car': car})
+    return render(request, 'rentals/car_delete.html', {'car': car})

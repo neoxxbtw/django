@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ car.brand }} {{ car.model }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+  <h2>Удалить автомобиль: {{ car }}</h2>
+  <p>Вы уверены, что хотите удалить этот автомобиль?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'rentals:car_detail' pk=car.pk %}" class="btn btn-secondary">Отмена</a>
+  </form>

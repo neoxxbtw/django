@@ -11,6 +11,10 @@ urlpatterns = [
     path('car/<int:pk>/', views.car_detail, name='car_detail'),
     path('favorite/<int:car_id>/', views.toggle_favorite, name='toggle_favorite'),
     path('favorites/', views.favorite_cars, name='favorite_cars'),
+    path('car/add/', views.car_add, name='car_add'),
+    path('car/<int:pk>/edit/', views.car_edit, name='car_edit'),
+    path('car/<int:pk>/delete/', views.car_delete, name='car_delete'),
+
 
 ]
 
