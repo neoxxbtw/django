@@ -46,6 +46,16 @@ body {
   background-color: #e67300;
 }
 
+.nav-button.center {
+  background-color: #006400;
+  box-shadow: 0 6px 16px rgba(0, 100, 0, 0.4);
+}
+
+.nav-button.center:hover {
+  background-color: #228B22;
+}
+
+
 .nav-button.right {
   background-color: #ff2e63;
   box-shadow: 0 6px 16px rgba(255, 46, 99, 0.4);
@@ -459,4 +469,90 @@ li {
 .car-card.favorite {
   border: 2px solid #ff2e63;
   box-shadow: 0 6px 24px rgba(255, 46, 99, 0.4);
+}
+
+
+/* === Заголовок формы === */
+h2 {
+  color: #ffa500;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+/* === Стили для формы редактирования (Scoped: .edit-car-form) === */
+
+.edit-car-form {
+  max-width: 600px;
+  margin: 0 auto 60px;            /* Центрируем и отступ снизу */
+  background-color: #1a1a1a;       /* Тёмный фон формы */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(255, 140, 0, 0.2);
+}
+
+.edit-car-form h2 {
+  color: #ffa500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.edit-car-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #ddd;
+}
+
+.edit-car-form input[type="text"],
+.edit-car-form input[type="number"],
+.edit-car-form input[type="file"],
+.edit-car-form select,
+.edit-car-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 18px;      /* Отступ между полями */
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+.edit-car-form input[type="text"]:focus,
+.edit-car-form input[type="number"]:focus,
+.edit-car-form select:focus,
+.edit-car-form textarea:focus {
+  border-color: #ffa500;
+  outline: none;
+}
+
+.edit-car-form .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.edit-car-form .btn-primary {
+  background-color: #ff8c00;
+  color: #fff;
+}
+
+.edit-car-form .btn-primary:hover {
+  background-color: #e67300;
+}
+
+.edit-car-form .btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.edit-car-form .btn-secondary:hover {
+  background-color: #5a6268;
 }
